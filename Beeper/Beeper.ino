@@ -16,6 +16,7 @@ unsigned int countdown = 0;
 // the setup routine runs once when you press reset:
 void setup() {
   // touch reciever
+  // maybe just input (that way the steal from the other microcontroller will block touch)
   pinMode(0, INPUT_PULLUP);
 
   // signaler / LED
