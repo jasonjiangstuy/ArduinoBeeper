@@ -1,6 +1,6 @@
-#define ZERO 0
+#define ZERO 2
 #define LED 1
-#define SOUND 2
+#define SOUND 00
 #define interval 500;
 unsigned int countdown = 0;
 
@@ -26,7 +26,7 @@ void loop() {
   if(countdown > 0) {
     countdown--;
     digitalWrite(LED, HIGH);    // light up the LED
-    analogWrite(SOUND, 130); //255
+    analogWrite(SOUND, 255); //255
   } 
   if (countdown <= 0){
     countdown = 0;
