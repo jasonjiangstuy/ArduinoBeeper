@@ -43,5 +43,6 @@ void loop() {
     digitalWrite(LED, LOW);     // otherwise, turn it off
 //    analogWrite(0, 0);
   }
-  delay(1); // run every ms// fastest touch is 2 ms on foil, this will catch all touches
+  delayMicroseconds(1); //microsecond
+  // run every ms// fastest touch is 2 ms on foil, this will catch all touches
 }
