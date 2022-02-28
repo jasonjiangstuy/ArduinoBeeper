@@ -1,7 +1,8 @@
 #define interval 500
 #define LED 1
 unsigned int countdown = 0;
-
+boolean current_state = false;
+boolean first = true;
 // LED: pin 1: output: lights up when you get a valid touch, this signal gets
 // transmitted to the transistor which opens current vout to buzzer
 //
@@ -16,32 +17,34 @@ unsigned int countdown = 0;
 
 // the setup routine runs once when you press reset:
 void setup() {
-  // touch reciever
-  // maybe just input (that way the steal from the other microcontroller will block touch)
-  pinMode(0, INPUT);
-//  create own pull down
-  // signaler / LED
-  pinMode(1, OUTPUT);
 
-  // steal // no touch for you!!
+  pinMode(0, OUTPUT);
+  pinMode(LED, OUTPUT);
   pinMode(2, INPUT_PULLUP);
 
 }
 
 // the loop routine runs over and over again forever:
 void loop() {
-  if (!digitalRead(0)) {  // if there is connectivity from ground to pin 0
+  if (first){
+    first = false;
+    current_state = digitalRead(2);
+    digitalWrite(LED, LOW); // inital beep
+    digitalWrite(0, LOW);
+  }
+  if (current_state != digitalRead(2)) {  // if there is change in connectivity from ground and pin 2
+    current_state = digitalRead(2);
     countdown = interval;  //set up the timer that the beep is going to go off
   }
   if(countdown > 0) {
     countdown--;
-    digitalWrite(LED, HIGH);    // light up the LED
-//    analogWrite(0, 255); //255
+    digitalWrite(LED, HIGH);    // Beep if there is time left for the beep sound
+     digitalWrite(0, HIGH);
   }
   if (countdown <= 0){
     countdown = 0;
-    digitalWrite(LED, LOW);     // otherwise, turn it off
-//    analogWrite(0, 0);
+    digitalWrite(LED, LOW);     // otherwise, turn off beep
+     digitalWrite(0, LOW);
   }
   delay(1); // run every ms// fastest touch is 2 ms on foil, this will catch all touches
 }
