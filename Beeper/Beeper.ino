@@ -2,7 +2,7 @@
 #define LED 1
 unsigned int countdown = 0;
 boolean current_state = false;
-boolean first = true;
+int status = 0;
 // LED: pin 1: output: lights up when you get a valid touch, this signal gets
 // transmitted to the transistor which opens current vout to buzzer
 //
@@ -26,11 +26,16 @@ void setup() {
 
 // the loop routine runs over and over again forever:
 void loop() {
-  if (first){
+  if (status = 0){
     first = false;
     current_state = digitalRead(2);
+    digitalWrite(LED, HIGH); // inital beep
+    digitalWrite(0, HIGH);
+    status++;
+  }else if(status == 1){
     digitalWrite(LED, LOW); // inital beep
     digitalWrite(0, LOW);
+    status++;
   }
   if (current_state != digitalRead(2)) {  // if there is change in connectivity from ground and pin 2
     current_state = digitalRead(2);
@@ -39,7 +44,7 @@ void loop() {
   if(countdown > 0) {
     countdown--;
     digitalWrite(LED, HIGH);    // Beep if there is time left for the beep sound
-     digitalWrite(0, HIGH);
+    digitalWrite(0, HIGH);
   }
   if (countdown <= 0){
     countdown = 0;
